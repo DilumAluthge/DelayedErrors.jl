@@ -1,14 +1,12 @@
 import Test
 
-import DelayedErrors
+using DelayedErrors
 
-# ENV["JULIA_DEBUG"] = "all"
+pop_delayed_errors()
 
-DelayedErrors.process_delayed_error_list()
-
-DelayedErrors.delayederror("This is ", "a test.", a = 1, b = "2",)
+push_delayed_error("This is ", "a test.", a = 1, b = "2",)
 
 Test.@test_throws(
     ErrorException,
-    DelayedErrors.process_delayed_error_list(),
+    pop_delayed_errors(),
     )
