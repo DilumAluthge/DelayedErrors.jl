@@ -25,6 +25,10 @@ julia --check-bounds=yes --color=yes -e '
     try Pkg.add("Coverage") catch end;
     '
 
+julia --check-bounds=yes --color=yes --code-coverage=all tests/test-0.jl
+
+julia --check-bounds=yes --color=yes --code-coverage=all tests/test-1.jl
+
 julia --check-bounds=yes --color=yes -e '
     import Coverage;
     import DelayedErrors;
