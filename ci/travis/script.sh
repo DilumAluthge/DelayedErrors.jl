@@ -13,8 +13,6 @@ julia --check-bounds=yes --color=yes -e '
     import DelayedErrors;
     '
 
-export JULIA_DEBUG="all"
-
 julia --check-bounds=yes --color=yes -e '
     import Pkg;
     Pkg.test("DelayedErrors"; coverage=true);
