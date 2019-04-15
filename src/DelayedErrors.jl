@@ -48,6 +48,8 @@ function pop_delayed_errors end
     push!(delayed_error_list, x,)
     @error("Pushed delayed error: $(x.message)", x.dict...)
     Base.show_backtrace(stderr, x.bt,)
+    println(stderr)
+    println(stderr)
     return nothing
 end
 
@@ -68,6 +70,8 @@ end
             x = popfirst!(delayed_error_list)
             @error("Popped delayed error: $(x.message)", x.dict...)
             Base.show_backtrace(stderr, x.bt,)
+            println(stderr)
+            println(stderr)
         end
         error("There were one or more delayed errors.")
     end

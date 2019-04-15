@@ -37,31 +37,70 @@ end
 end
 
 @noinline function child1()::Nothing
-    push_delayed_error("This is ","a test.";a = 1,b = "2",)
+    grandchild1()
     return nothing
 end
 @noinline function child2()::Nothing
-    push_delayed_error("Test";st = "hello",bt = "goodbye",)
+    grandchild2()
     return nothing
 end
 @noinline function child3()::Nothing
-    push_delayed_error(
-        "Test";
-        st = "hello", st1 = "hello", bt = "goodbye", bt1 = "goodbye",
-        )
+    grandchild3()
     return nothing
 end
 @noinline function child4()::Nothing
+    grandchild4()
+    return nothing
+end
+
+@noinline function grandchild1()::Nothing
     push_delayed_error(
-        "Test";
-        st = "hello", st1 = "hello", st11 = "hello",
-        bt = "goodbye", bt1 = "goodbye", bt11 = "goodbye",
+        ;
+        a = 1,
+        b = "2",
+        )
+    return nothing
+end
+@noinline function grandchild2()::Nothing
+    push_delayed_error(
+        "This is a test";
+        a = 1,
+        b = "2",
+        )
+    return nothing
+end
+@noinline function grandchild3()::Nothing
+    push_delayed_error(
+        "This is ",
+        "a test";
+        a = 1,
+        b = "2",
+        )
+    return nothing
+end
+@noinline function grandchild4()::Nothing
+    push_delayed_error(
+        "This ",
+        "is ",
+        "a ",
+        "test";
+        a = 1,
+        b = "2",
         )
     return nothing
 end
 
 pop_delayed_errors()
+pop_delayed_errors()
+pop_delayed_errors()
 grandparent1()
+Test.@test_throws(
+    ErrorException,
+    pop_delayed_errors(),
+    )
+pop_delayed_errors()
+pop_delayed_errors()
+pop_delayed_errors()
 grandparent2()
 grandparent3()
 grandparent4()
@@ -69,3 +108,6 @@ Test.@test_throws(
     ErrorException,
     pop_delayed_errors(),
     )
+pop_delayed_errors()
+pop_delayed_errors()
+pop_delayed_errors()
