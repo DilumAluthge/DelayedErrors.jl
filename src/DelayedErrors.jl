@@ -27,7 +27,7 @@ function push_delayed_error(
     x = DelayedError(message, Dict(kwargs...),)
     global delayed_error_list
     push!(delayed_error_list, x,)
-    @error("Delaying this error until later: $(x.message)", x.dict...)
+    @error("Pushed delayed error: $(x.message)", x.dict...)
     return nothing
 end
 
@@ -42,11 +42,11 @@ end
 function pop_delayed_errors()::Nothing
     global delayed_error_list
     if isempty(delayed_error_list)
-        @debug("There were no delayed errors.")
+        @debug("There were no delayed errors to pop.")
     else
         while !isempty(delayed_error_list)
             x = popfirst!(delayed_error_list)
-            @error("Delayed error from earlier: $(x.message)", x.dict...)
+            @error("Popped delayed error: $(x.message)", x.dict...)
         end
         error("There were one or more delayed errors.")
     end
